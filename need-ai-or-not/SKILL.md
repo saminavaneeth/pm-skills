@@ -1,6 +1,7 @@
 ---
 name: need-ai-or-not
 description: Decide whether AI (an LLM, a machine learning model or an agent) is truly the best solution for a specific customer problem or feature, or whether a simpler fix wins. Runs a quick triage first and, if AI still looks like a fit and the PM agrees, a full assessment that ends in an AI Decision Memo. Use whenever a product manager asks "should we use AI for this?", "is this a good AI use case?", "do we need AI or would rules do?", is weighing an AI feature request from leadership, sales or customers, or wants to sanity-check an AI idea before writing a spec or taking it to review. Not for general questions about AI, AI strategy with no specific problem, or help building, prompting or debugging an AI feature that has already been decided.
+disable-model-invocation: true
 ---
 
 # Need AI or Not

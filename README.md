@@ -31,7 +31,7 @@ Decides whether AI is really the best solution for a specific customer problem, 
 - Recommends an answer on judgment calls so you can move fast; the decisions stay yours.
 - Ends with an **AI Decision Memo**: build without AI, hybrid, AI-first, not yet, or don't build, with success metrics and stop criteria.
 
-It runs when you call it, or when you ask Claude whether a specific problem needs AI:
+It only runs when you call it:
 
 ```
 /need-ai-or-not Customers want AI to classify incident reports from frontline workers
