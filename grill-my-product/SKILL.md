@@ -96,6 +96,8 @@ The session ends only when:
 
 Then produce a **Product Decision Brief** (see the template at the end of [references/decision-tree.md](references/decision-tree.md)): decisions made, rationale, riskiest assumption and how to test it, success metrics with targets and kill criteria, open questions with owners, and explicit non-goals.
 
+Write the brief to `docs/briefs/<kebab-name>.md` in the current project, unless the PM names another location or tool. Keep the chat reply short: where the file is, the riskiest assumption, and the open questions that block the next step.
+
 **Do not write a PRD, spec, roadmap, or code until the PM confirms the shared understanding.** Once they do, offer to turn the brief into a spec (e.g., with a prd or write-spec skill if available). For AI solutions, also offer to turn the AI quality bar into an eval plan (e.g., with an evals skill if available).
 
 ## Tone

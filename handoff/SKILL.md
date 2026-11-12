@@ -35,8 +35,8 @@ Look before asking. Check the default locations the other skills use, then follo
 | JTBD analysis | `docs/jtbd/<name>.md` |
 | Eval plan | `docs/evals/<feature>/eval-plan.md`, plus `test-cases.jsonl` (or `.csv`) and `judges/<criterion-id>.md` |
 | Prototype | `prototypes/<name>/`: its `README.md` (flows, gaps), `index.html` (`data-screen`, `data-note="R#…"`), `test-script.md`, any test results |
-| Product Decision Brief | No fixed path. Search the project for the title `Product Decision Brief:` |
-| AI Decision Memo | No fixed path. Search for `AI Decision Memo:` (and `Triage Verdict:`) |
+| Product Decision Brief | `docs/briefs/<name>.md`. If it isn't there, search the project for the title `Product Decision Brief:` |
+| AI Decision Memo | `docs/ai-decisions/<name>.md`. If it isn't there, search for `AI Decision Memo:` (and `Triage Verdict:`) |
 | Existing handoff | `docs/handoff/<feature>/handoff.md` |
 
 - **Follow links.** Read the PRD's `Links` row and every link inside the documents. A linked file that doesn't exist is a finding.

@@ -116,6 +116,8 @@ Write the Triage Verdict from the template, with exactly one verdict:
 - **Not enough information yet:** list the gaps and the cheapest way to close each one.
 - **Worth a full assessment:** name the step AI would handle.
 
+Write the verdict to `docs/ai-decisions/<kebab-name>.md` in the current project, unless the PM names another location or tool.
+
 Then apply the gate described in "How a session runs."
 
 ## Full assessment
@@ -159,7 +161,7 @@ Then check adoption. Does the output appear inside the existing workflow, at the
 
 Recommend one of the five outcomes (build without AI, hybrid, AI-first, not yet, don't build), with the reasoning in two or three sentences. The PM decides.
 
-Before writing the memo, show a short summary and ask the PM to confirm it reflects their thinking. Then write the AI Decision Memo from the template. Include success metrics, stop criteria, after-launch signals and a review date.
+Before writing the memo, show a short summary and ask the PM to confirm it reflects their thinking. Then write the AI Decision Memo from the template. Include success metrics, stop criteria, after-launch signals and a review date. Write it to the same file as the Triage Verdict, with the memo first and the verdict kept below it. Keep the chat reply short: where the file is, the outcome, and the stop criteria.
 
 ## Tracking progress
 
