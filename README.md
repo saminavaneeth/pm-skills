@@ -118,7 +118,7 @@ It only runs when you call it:
 
 Gets product work ready to hand to the team that builds it (engineering, design, data science, or a vendor), and checks that your documents agree with each other before they find out mid-build.
 
-- **Finds your artifacts itself:** PRD, JTBD analysis, eval plan and test cases, prototype, Product Decision Brief, and AI Decision Memo. It works with just a PRD and lists the rest as gaps, rated by what the receiving team needs.
+- **Finds your artifacts itself:** PRD, JTBD analysis, eval plan and test cases, prototype, Product Decision Brief (from `grill-my-product`), and AI Decision Memo (from `need-ai-or-not`). It works with just a PRD and lists the rest as gaps, rated by what the receiving team needs.
 - **Cross-document checks**, the part no other skill does: a non-goal the prototype shows, a P0 no screen covers, launch thresholds that differ between the PRD and the eval plan, a must-never item with no test case, metrics or users named differently, open questions closed in one document but open in another, decisions the PRD contradicts, and stale or superseded sources. Each finding quotes both sources and is rated Blocking, Should fix, or Note.
 - Walks you through each blocking conflict one at a time, with a recommended resolution. It never edits your source documents; it lists what to change where.
 - **Create** writes one entry-point **handoff package**: verdict (Ready / Ready with caveats / Not ready), what we're building and why, source documents, decisions log, findings, gaps for the audience, open questions with owners, kickoff questions, and non-goals copied word for word. Every line links to its source.
@@ -137,6 +137,36 @@ It only runs when you call it:
 `/grill-my-product` (is this worth building?) → `/jtbd` (what job does it do, and what's underserved?) → `/prd` (what exactly are we building?) → `/prototype` (can users actually do it?) → `/handoff` (do the documents agree, and is it ready for the team that builds it?). For AI ideas, start with `/need-ai-or-not` (does this need AI at all?), and add `/evals` (how will we know it's good enough?). Each skill works on its own, and picks up the previous one's output if it finds it.
 
 For AI features, `/evals` isn't a one-off step. Rerun it after launch: error analysis on production samples, and regression checks whenever the prompt or model changes.
+
+### What each skill produces
+
+Each skill saves its document to a default location in your project, unless you name another one. That way the next skill, and especially `/handoff`, can find it.
+
+| Skill | Produces | Default location |
+|---|---|---|
+| `grill-my-product` | Product Decision Brief | `docs/briefs/<name>.md` |
+| `need-ai-or-not` | Triage Verdict, then AI Decision Memo (same file) | `docs/ai-decisions/<name>.md` |
+| `jtbd` | JTBD analysis | `docs/jtbd/<name>.md` |
+| `prd` | PRD | `docs/prds/<name>.md` |
+| `evals` | Eval plan, test cases, judge prompts | `docs/evals/<feature>/` |
+| `prototype` | Clickable prototype and test script | `prototypes/<name>/` |
+| `handoff` | Handoff package | `docs/handoff/<feature>/handoff.md` |
+
+There's nothing to set up: each skill creates its folder the first time it writes. A project that uses all of them ends up looking like this:
+
+```
+docs/
+  briefs/report-scheduling.md
+  ai-decisions/incident-classification.md
+  jtbd/report-scheduling.md
+  prds/report-scheduling.md
+  evals/report-scheduling/
+    eval-plan.md
+    test-cases.jsonl
+    judges/
+  handoff/report-scheduling/handoff.md
+prototypes/report-scheduling/
+```
 
 ## Install
 
