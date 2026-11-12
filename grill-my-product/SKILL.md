@@ -10,10 +10,12 @@ Interview the PM until we reach a **shared, explicit understanding** of what is 
 
 ## 1. Classify the initiative first
 
-Before anything else, determine (ask if unclear — this is always round 1):
+Before anything else, determine (ask if unclear — this is always the first question):
 
 - **New product** — new users, new value proposition, possibly new market. Weight the tree toward *problem validity, target segment, willingness to pay, positioning, and riskiest assumption*.
 - **New feature of an existing product** — existing users, existing strategy. Weight the tree toward *fit with product strategy, which existing segment, impact on current workflows, cannibalization/complexity cost, adoption and rollout*.
+
+Also note whether the solution **relies on AI** (a model generates, decides, or acts). If it does, include the 🤖 AI fit and quality bar branch after Scope.
 
 Also capture the **stage**: idea → discovery → defined → building. Don't grill a raw idea on rollout plans; don't grill something mid-build on whether the problem exists (unless the answers reveal it doesn't).
 
@@ -31,18 +33,19 @@ Problem ─┬─> Target user/segment ─┬─> Value proposition ─┬─> S
 Scope ──> Risks & riskiest assumption ──> Validation plan ──> Rollout / GTM
 ```
 
-## 3. Ask in rounds
+## 3. Ask one question at a time
 
-- **The frontier** = every open decision whose prerequisites are already settled. Ask the *entire* frontier in one round — no more. Never ask a question whose framing depends on an answer you haven't heard yet; defer it to a later round.
-- After each round, update the tree and recompute the frontier.
-- Aim for 2–5 questions per round. If the frontier is larger, take the ones closest to the root first.
+- **The frontier** = every open decision whose prerequisites are already settled. Never ask a question whose framing depends on an answer you haven't heard yet.
+- **Ask exactly one question per message**, then stop and wait for the answer. Never bundle questions, add "also…" follow-ups, or list the questions coming next.
+- Pick the next question from the frontier, choosing the one closest to the root of the tree (the one that unlocks the most downstream decisions).
+- After each answer, update the tree, recompute the frontier, and choose the next question. If the answer was weak or vague, the next question can be the sharper follow-up on the same decision.
 
 ### Question format
 
-Number and title each question, separate them with horizontal rules, and **always give your recommended answer** marked with `→`. Phrase questions so that "yes" accepts your recommendation, so the PM can move fast.
+Give the question a short title and **always give your recommended answer** marked with `→`. Phrase the question so that "yes" accepts your recommendation, so the PM can move fast.
 
 ```
-### 1. Who is the primary user?
+### Who is the primary user?
 
 You've described both ops managers and frontline agents. They have different
 pains and different buying power.
@@ -53,8 +56,6 @@ pains and different buying power.
 
 → Recommend (a): build for the ops manager first; agents are a secondary user
   whose experience is a constraint, not the target. Agree?
-
----
 ```
 
 ### What makes a good grilling question
@@ -64,17 +65,17 @@ pains and different buying power.
 - **Make it falsifiable.** "What result in 30 days would make you kill this?"
 - **Name the hidden assumption.** When an answer rests on something unstated, say it out loud and ask the PM to own or reject it.
 - **Push on vagueness.** Words like "users", "engagement", "seamless", "improve", "everyone" are red flags — ask for the specific segment, number, or behavior.
-- **Steelman the "don't build it" option.** Every round should leave room for "maybe this shouldn't exist," without being contrarian for sport.
+- **Steelman the "don't build it" option.** The session should leave room for "maybe this shouldn't exist," without being contrarian for sport.
 
 ## 4. Facts are yours; decisions are theirs
 
-- **Facts** (what the codebase/product currently does, existing docs, competitors, available data, analytics, past research in the workspace): look them up yourself — read files, search, or dispatch a subagent with fresh context if available. Don't make the PM answer what you can find. Exploration must not block the rest of the frontier; only questions that depend on the fact wait.
+- **Facts** (what the codebase/product currently does, existing docs, competitors, available data, analytics, past research in the workspace): look them up yourself — read files, search, or dispatch a subagent with fresh context if available. Don't make the PM answer what you can find. While you look something up, keep asking questions that don't depend on it; only questions that depend on the fact wait.
 - **Decisions** (who to serve, what to cut, what counts as success, what risk to accept): only the PM makes these. Present the options, recommend one, and wait.
 - If the PM says "I don't know" to a factual question, record it as an **open question with an owner**, not a decision.
 
 ## 5. Track state visibly
 
-Every few rounds (and whenever asked), show a compact status:
+Every five or so questions (and whenever asked), show a compact status:
 
 ```
 Decided:   problem, primary user, MVP scope
@@ -95,7 +96,7 @@ The session ends only when:
 
 Then produce a **Product Decision Brief** (see the template at the end of [references/decision-tree.md](references/decision-tree.md)): decisions made, rationale, riskiest assumption and how to test it, success metrics with targets and kill criteria, open questions with owners, and explicit non-goals.
 
-**Do not write a PRD, spec, roadmap, or code until the PM confirms the shared understanding.** Once they do, offer to turn the brief into a spec (e.g., with a write-spec skill if available).
+**Do not write a PRD, spec, roadmap, or code until the PM confirms the shared understanding.** Once they do, offer to turn the brief into a spec (e.g., with a prd or write-spec skill if available). For AI solutions, also offer to turn the AI quality bar into an eval plan (e.g., with an evals skill if available).
 
 ## Tone
 

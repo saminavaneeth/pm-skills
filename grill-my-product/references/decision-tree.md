@@ -1,6 +1,6 @@
 # Product Decision Tree
 
-The branches to walk when grilling a product idea. Not every question applies — prune by **initiative type** (🆕 new product, ➕ new feature, or both) and **stage**. Each branch lists what "settled" looks like so you know when to move on.
+The branches to walk when grilling a product idea. Not every question applies — prune by **initiative type** (🆕 new product, ➕ new feature, or both), by whether the solution relies on AI (🤖), and by **stage**. Each branch lists what "settled" looks like so you know when to move on.
 
 ---
 
@@ -71,6 +71,18 @@ The branches to walk when grilling a product idea. Not every question applies �
 - ➕ What existing flows, settings, or features does this touch or change? Any migration?
 - ➕ What's the complexity cost to the existing product (UI clutter, support, edge cases)?
 - Rough effort size? Any hard dependencies on other teams?
+
+## 7a. 🤖 AI fit and quality bar (only if the solution relies on a model)
+
+*Settled when:* we know why AI is the right tool, what a wrong output costs, what the AI must never do, and how we'll know it's good enough.
+
+- Why AI? Would a rules-based or manual approach solve the problem well enough, more cheaply and predictably?
+- What does a wrong output cost the user? Can they tell it's wrong before acting on it?
+- What must the AI **never** do (invent facts, leak data, take irreversible actions, give advice it shouldn't)?
+- What happens when it's unsure or fails: does it ask, defer to a human, or say "I don't know"?
+- How will we know it's good enough to ship? What are the 2–3 quality criteria, and what's the bar for each? (A detailed eval plan comes later; here we only need the bar.)
+- Do we have, or can we get, real example inputs to test on before launch?
+- Cost and latency per use: does the unit economics work at the expected usage?
 
 ## 8. Success metrics
 
@@ -151,6 +163,12 @@ For <user> who <problem>, <product> lets them <outcome>, unlike <alternative>.
 |---|---|---|---|
 Guardrails: …
 Kill criterion: …
+
+## AI quality bar (if the solution relies on AI)
+Why AI: …   Must never: …   Fallback when unsure: …
+| Quality criterion | Bar |
+|---|---|
+Cost of a wrong output / detectable by user? …
 
 ## Riskiest assumption & validation
 Assumption: …
