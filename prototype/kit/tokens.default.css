@@ -1,0 +1,117 @@
+/*
+ * Prototype tokens: DEFAULT (neutral)
+ *
+ * This is the ONLY file that changes when the look changes. kit.css uses these
+ * names and nothing else. To use a brand or a new look, replace this file with
+ * one that defines the same names (see references/token-contract.md).
+ *
+ * Light is the default. Dark applies when <html data-theme="dark"> is set (the
+ * prototype toolbar does this). --has-dark-theme: 1 shows the toolbar's Dark toggle.
+ */
+:root {
+  color-scheme: light;
+  --has-dark-theme: 1;
+
+  /* Color: surfaces */
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f3f5;
+  --color-surface-raised: #ffffff;
+  --color-border: #e3e6ea;
+  --color-border-strong: #c9ced6;
+  --color-overlay: rgba(15, 23, 42, 0.45);
+
+  /* Color: text */
+  --color-text: #111827;
+  --color-text-muted: #5b6472;
+
+  /* Color: brand and interaction */
+  --color-primary: #3b5bdb;
+  --color-primary-hover: #324fc4;
+  --color-primary-subtle: #eef2ff;
+  --color-on-primary: #ffffff;
+  --color-focus: #3b5bdb;
+
+  /* Color: status */
+  --color-success: #1f7a45;
+  --color-success-subtle: #e8f6ee;
+  --color-warning: #a35400;
+  --color-warning-subtle: #fff4e5;
+  --color-danger: #c92a2a;
+  --color-danger-subtle: #fdecec;
+  --color-on-danger: #ffffff;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.16);
+
+  /* Layout and motion */
+  --control-height: 36px;
+  --sidebar-width: 232px;
+  --content-max-width: 1120px;
+  --duration-fast: 150ms;
+  --easing: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #0f1115;
+  --color-surface: #171a21;
+  --color-surface-muted: #1f232c;
+  --color-surface-raised: #1d2129;
+  --color-border: #2a2f3a;
+  --color-border-strong: #3b4252;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+
+  --color-text: #e8eaef;
+  --color-text-muted: #9aa3b2;
+
+  --color-primary: #8fa2ff;
+  --color-primary-hover: #a5b4ff;
+  --color-primary-subtle: #1e2647;
+  --color-on-primary: #0b1020;
+  --color-focus: #8fa2ff;
+
+  --color-success: #5cc98f;
+  --color-success-subtle: #13281d;
+  --color-warning: #f0a04b;
+  --color-warning-subtle: #2b1f10;
+  --color-danger: #ff7a7a;
+  --color-danger-subtle: #2e1517;
+  --color-on-danger: #1a0b0b;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}

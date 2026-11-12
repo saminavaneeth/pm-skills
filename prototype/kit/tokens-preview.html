@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Token preview</title>
+  <!--
+    Put this file next to a tokens.css and open it, to check a brand mapping or a new look
+    before building screens. ?tokens=tokens-bold.css previews a different token file.
+  -->
+  <link id="proto-tokens" rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="kit.css">
+  <style>
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--space-3); }
+    .swatch { overflow: hidden; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+    .swatch-chip { height: 56px; border-bottom: 1px solid var(--color-border); }
+    .swatch-meta { padding: var(--space-2) var(--space-3); font-size: var(--text-xs); }
+    .swatch-meta code { display: block; }
+    .pairs td, .pairs th { white-space: nowrap; }
+    .sample-chip { display: inline-block; padding: 2px var(--space-2); border-radius: var(--radius-sm); }
+    .scale { display: flex; align-items: flex-end; gap: var(--space-4); flex-wrap: wrap; }
+    .space-bar { height: 12px; background: var(--color-primary); border-radius: 2px; }
+    .shape-box { width: 96px; height: 64px; background: var(--color-surface); border: 1px solid var(--color-border); display: grid; place-items: center; font-size: var(--text-xs); }
+  </style>
+</head>
+<body data-chrome="off">
+<div class="proto-root">
+  <main class="main">
+    <div class="content">
+      <div class="page-header">
+        <div class="stack-sm">
+          <h1>Token preview</h1>
+          <p class="muted">Check the mapping before building. Contrast is checked against WCAG AA.</p>
+        </div>
+        <button class="btn" id="theme-toggle" type="button">Toggle dark</button>
+      </div>
+
+      <section class="stack"><h2>Color</h2><div id="colors" class="stack-lg"></div></section>
+
+      <section class="stack">
+        <h2>Contrast</h2>
+        <div class="table-wrap">
+          <table class="table pairs">
+            <thead><tr><th>Text</th><th>On</th><th>Sample</th><th class="num">Ratio</th><th>Result</th></tr></thead>
+            <tbody id="contrast"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="stack">
+        <h2>Type</h2>
+        <div class="card stack" id="type"></div>
+      </section>
+
+      <section class="stack">
+        <h2>Spacing, radius, shadow</h2>
+        <div class="card stack">
+          <div class="scale" id="spacing"></div>
+          <div class="scale" id="shape"></div>
+        </div>
+      </section>
+
+      <section class="stack">
+        <h2>Components</h2>
+        <div class="card stack">
+          <div class="row">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn">Default</button>
+            <button class="btn btn-ghost">Ghost</button>
+            <button class="btn btn-danger">Delete</button>
+            <button class="btn" disabled>Disabled</button>
+            <button class="btn btn-primary btn-sm">Small</button>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label class="label" for="p1">Label</label>
+              <input class="input" id="p1" placeholder="Placeholder">
+              <span class="help">Help text</span>
+            </div>
+            <div class="field has-error">
+              <label class="label" for="p2">With error</label>
+              <input class="input" id="p2" value="not-an-email">
+              <span class="error-text">Enter a valid email address</span>
+            </div>
+            <div class="field">
+              <label class="label" for="p3">Select</label>
+              <select class="select" id="p3"><option>Option</option></select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="check"><input type="checkbox" checked> Checkbox</label>
+            <label class="check"><input type="radio" name="r" checked> Radio</label>
+            <label class="check"><input type="checkbox" class="switch" checked> Switch</label>
+          </div>
+          <div class="row">
+            <span class="badge">Neutral</span>
+            <span class="badge badge-primary">Primary</span>
+            <span class="badge badge-success">Success</span>
+            <span class="badge badge-warning">Warning</span>
+            <span class="badge badge-danger">Danger</span>
+            <span class="avatar">DR</span>
+          </div>
+          <div class="alert">Info alert</div>
+          <div class="alert alert-success">Success alert</div>
+          <div class="alert alert-warning">Warning alert</div>
+          <div class="alert alert-danger">Danger alert</div>
+          <div class="tabs"><button class="tab is-active">Active tab</button><button class="tab">Tab</button></div>
+          <div class="ai-output stack-sm"><span class="ai-label">AI-generated</span><p>AI output block.</p></div>
+          <div class="row"><div class="spinner"></div><div class="skeleton" style="width: 200px"></div><div class="progress" style="width: 200px"><span style="width: 60%"></span></div></div>
+          <div class="empty"><h3>Empty state</h3><p>Explains what will appear here and how to start.</p></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var link = document.getElementById('proto-tokens');
+  var p = new URLSearchParams(location.search).get('tokens');
+  if (p) link.href = p;
+
+  var groups = {
+    'Surfaces': ['--color-bg', '--color-surface', '--color-surface-muted', '--color-surface-raised', '--color-border', '--color-border-strong', '--color-overlay'],
+    'Text': ['--color-text', '--color-text-muted'],
+    'Brand and interaction': ['--color-primary', '--color-primary-hover', '--color-primary-subtle', '--color-on-primary', '--color-focus'],
+    'Status': ['--color-success', '--color-success-subtle', '--color-warning', '--color-warning-subtle', '--color-danger', '--color-danger-subtle', '--color-on-danger']
+  };
+  var pairs = [
+    ['--color-text', '--color-bg'], ['--color-text', '--color-surface'], ['--color-text-muted', '--color-surface'],
+    ['--color-text-muted', '--color-surface-muted'], ['--color-on-primary', '--color-primary'], ['--color-primary', '--color-surface'],
+    ['--color-on-danger', '--color-danger'], ['--color-success', '--color-success-subtle'],
+    ['--color-warning', '--color-warning-subtle'], ['--color-danger', '--color-danger-subtle']
+  ];
+
+  function raw(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  var probe = document.createElement('span');
+  document.body.appendChild(probe);
+  function rgb(name) {
+    probe.style.color = 'var(' + name + ')';
+    var m = getComputedStyle(probe).color.match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/);
+    return m ? [+m[1], +m[2], +m[3]] : null;
+  }
+  function lum(c) {
+    var a = c.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+  function ratio(a, b) {
+    var x = rgb(a), y = rgb(b);
+    if (!x || !y) return null;
+    var l1 = lum(x), l2 = lum(y);
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function draw() {
+    document.getElementById('colors').innerHTML = Object.keys(groups).map(function (g) {
+      return '<div class="stack"><h3>' + g + '</h3><div class="swatches">' + groups[g].map(function (n) {
+        var v = raw(n);
+        return '<div class="swatch"><div class="swatch-chip" style="background: var(' + n + ')"></div><div class="swatch-meta"><code>' + n + '</code><span class="muted">' + (esc(v) || '<strong>missing</strong>') + '</span></div></div>';
+      }).join('') + '</div></div>';
+    }).join('');
+
+    document.getElementById('contrast').innerHTML = pairs.map(function (p) {
+      var r = ratio(p[0], p[1]);
+      var result = r == null ? '<span class="badge">n/a</span>' : r >= 4.5 ? '<span class="badge badge-success">AA</span>' : r >= 3 ? '<span class="badge badge-warning">Large text only</span>' : '<span class="badge badge-danger">Fails</span>';
+      return '<tr><td><code>' + p[0] + '</code></td><td><code>' + p[1] + '</code></td><td><span class="sample-chip" style="color: var(' + p[0] + '); background: var(' + p[1] + ')">Sample text</span></td><td class="num">' + (r == null ? '—' : r.toFixed(2)) + '</td><td>' + result + '</td></tr>';
+    }).join('');
+
+    document.getElementById('type').innerHTML =
+      '<p class="muted small">--font-sans: <code>' + esc(raw('--font-sans')) + '</code></p>' +
+      ['2xl', 'xl', 'lg', 'md', 'sm', 'xs'].map(function (s) {
+        return '<div style="font-size: var(--text-' + s + ')">--text-' + s + ' (' + esc(raw('--text-' + s)) + '): The quick brown fox renews on Friday</div>';
+      }).join('') +
+      '<div class="row"><span style="font-weight: var(--weight-regular)">Regular</span><span style="font-weight: var(--weight-medium)">Medium</span><span style="font-weight: var(--weight-bold)">Bold</span><code>Monospace 0123</code></div>';
+
+    document.getElementById('spacing').innerHTML = [1, 2, 3, 4, 5, 6, 7, 8].map(function (i) {
+      return '<div class="stack-sm"><div class="space-bar" style="width: var(--space-' + i + ')"></div><span class="xs muted">space-' + i + ' · ' + esc(raw('--space-' + i)) + '</span></div>';
+    }).join('');
+    document.getElementById('shape').innerHTML =
+      ['sm', 'md', 'lg', 'full'].map(function (r) { return '<div class="shape-box" style="border-radius: var(--radius-' + r + ')">radius-' + r + '</div>'; }).join('') +
+      ['sm', 'md', 'lg'].map(function (s) { return '<div class="shape-box" style="border: 0; box-shadow: var(--shadow-' + s + ')">shadow-' + s + '</div>'; }).join('');
+
+    var dark = raw('--has-dark-theme') === '1';
+    var btn = document.getElementById('theme-toggle');
+    btn.disabled = !dark;
+    btn.title = dark ? '' : 'These tokens define no dark theme';
+  }
+
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var h = document.documentElement;
+    if (h.getAttribute('data-theme') === 'dark') h.removeAttribute('data-theme'); else h.setAttribute('data-theme', 'dark');
+    draw();
+  });
+  link.addEventListener('load', draw);
+  draw();
+})();
+</script>
+</body>
+</html>
