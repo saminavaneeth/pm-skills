@@ -17,21 +17,25 @@ CLAUDE.md               # this file
 Existing skills:
 
 - `grill-my-product`: a structured interview that stress-tests a new product or feature and ends in a Product Decision Brief.
+- `need-ai-or-not`: decides whether AI is really the best solution for a specific customer problem, through a quick triage and, if AI still fits, a full assessment that ends in an AI Decision Memo.
 - `jtbd`: creates or reviews a Jobs to Be Done analysis (job map, outcome statements, forces of progress, job stories), with quality checks and an interview guide.
 - `prd`: writes a PRD sized Lite, Standard, or Full from a template, or reviews an existing one against a quality checklist and readiness test.
 - `evals`: creates or reviews evals for AI features, in three modes: Define (eval plan), Analyze (error analysis on real outputs), and Review (plan or results, ending in go/no-go). It writes test cases and judge prompts that work with any eval tool.
 - `prototype`: builds, iterates on, or reviews clickable HTML prototypes from a reusable kit, with a swappable design-token layer (company brand imported from Figma variables or CSS variables, a new look, or default/wireframe) and a usability test script.
+- `handoff`: assembles a handoff package for the team that builds the work (engineering, design, data science, or a vendor) and checks the PM's artifacts against each other for contradictions and gaps. Create builds the package; Review checks an existing one and ends in a verdict. It writes no product content and never edits the source documents.
 
-**Naming:** skills that both create and review an artifact are named after the artifact (`prd`, `jtbd`, `evals`, `prototype`), not the verb. Both modes share one standard (template + checks), live in one skill, and never edit the PM's document unless asked.
+**Naming:** skills that both create and review an artifact are named after the artifact (`prd`, `jtbd`, `evals`, `prototype`, `handoff`), not the verb. Both modes share one standard (template + checks), live in one skill, and never edit the PM's document unless asked.
 
-These skills are designed to chain: grill → JTBD → PRD → prototype, plus evals for AI features. Each one picks up the previous skill's output if it exists, but never requires it. Default output locations in a user's project are `docs/prds/`, `docs/jtbd/`, `docs/evals/<feature>/`, and `prototypes/<name>/`. Saved prototype brands live in `~/.claude/prototype-brands/` (user level) or `.claude/prototype-brands/` (project level, shared through the repo).
+These skills are designed to chain: grill → JTBD → PRD → prototype → handoff, plus need-ai-or-not before grilling an AI idea and evals for AI features. Each one picks up the previous skill's output if it exists, but never requires it. Default output locations in a user's project are `docs/prds/`, `docs/jtbd/`, `docs/evals/<feature>/`, `prototypes/<name>/`, and `docs/handoff/<feature>/`. The Product Decision Brief and AI Decision Memo have no fixed path; `handoff` finds them by title. Saved prototype brands live in `~/.claude/prototype-brands/` (user level) or `.claude/prototype-brands/` (project level, shared through the repo).
 
 **AI features have one source of truth per concern.** Don't duplicate eval method into other skills:
 
 - `grill-my-product` asks whether AI is the right approach and sets a rough quality bar.
 - `jtbd` stays solution-agnostic; its outcome statements become candidate eval criteria.
 - `prd` states the bar: the must-never list, criteria, launch thresholds, fallbacks, and budget. It links to the eval plan.
+- `need-ai-or-not` decides whether AI fits at all, and at what autonomy level (AI Decision Memo).
 - `evals` owns the method: error analysis, test sets, graders, judge validation, go/no-go.
+- `handoff` owns nothing here: it checks that the PRD's bar and the eval plan agree (thresholds, must-never coverage by test cases) and points to the owning skill.
 
 ## Adding or changing a skill
 

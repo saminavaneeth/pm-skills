@@ -50,6 +50,8 @@ Creates or reviews a **Jobs to Be Done** analysis for a product, feature, or mar
 - Checks every statement against JTBD quality rules (solution-agnostic, stable, right altitude, no targets in jobs, measurable outcomes, situations not personas, conflicting incentives in the forces).
 - Labels customer evidence as observed, stated, or hypothesis, and product or platform claims as assumptions or facts that need checking, each with who confirms it. Ends with a validation plan that says what would change your mind.
 
+It only runs when you call it:
+
 ```
 /jtbd Synthesize the interview notes in research/ for our expense-reporting product
 /jtbd Write a feature JTBD for the incident-reporting chat bot in docs/prds/uc1.md
@@ -67,6 +69,8 @@ Writes a decision-ready **PRD**, or reviews one you already have.
 - Template covers problem & evidence (labeled hypothesis vs. assumption), goals & non-goals, success metrics with baselines, targets and guardrails, roles & permissions, prioritized requirements with Given/When/Then acceptance criteria (per requirement or per flow), edge cases, risks & dependencies, staged rollout with a kill switch, and instrumentation.
 - Runs a 45-item quality checklist (blockers, majors, minors, each tagged structural or decision) plus a readiness test: could eng estimate it, QA test it, design find every state, and an exec state the bet?
 
+It only runs when you call it:
+
 ```
 /prd Turn the decision brief in docs/ai-summaries-brief.md into a PRD
 /prd Review docs/prds/report-scheduling.md — is it ready for eng kickoff?
@@ -81,6 +85,8 @@ Creates or reviews **evals** for AI products and AI-enabled features: the PM's s
 - **Review**: critiques an eval plan, rubric, judge prompt, test set, or results. Results reviews end with a **Go / Go with conditions / No-go** call.
 - Opinionated defaults: binary pass/fail over 1–5 scores, zero-tolerance criteria over averages, results by slice rather than only overall, no trusting an unvalidated judge, and judges from a different model family than the AI they grade.
 - Works with any eval tool. Outputs are a Markdown plan, JSONL or CSV test cases, and judge prompts engineers can use in whatever they run.
+
+It only runs when you call it:
 
 ```
 /evals Define an eval plan for the AI summaries in docs/prds/ai-summaries.md
@@ -100,15 +106,35 @@ Builds or reviews a **clickable HTML prototype** for usability tests, stakeholde
 - Built from the PRD's P0 flows and the JTBD job stories. It covers the empty, error, and loading states and tags screens with requirement IDs.
 - For user tests: `?present` mode, a test script built from the job stories, and a reset between participants. **Review mode** checks an existing prototype against its PRD and purpose.
 
+It only runs when you call it:
+
 ```
 /prototype Make the P0 flows in docs/prds/report-scheduling.md clickable for a user test, using our Acme brand
 /prototype Import our design tokens from the Figma variables export in design/tokens.json
 /prototype Explore three visual directions for the new onboarding concept
 ```
 
+### `handoff`
+
+Gets product work ready to hand to the team that builds it (engineering, design, data science, or a vendor), and checks that your documents agree with each other before they find out mid-build.
+
+- **Finds your artifacts itself:** PRD, JTBD analysis, eval plan and test cases, prototype, Product Decision Brief, and AI Decision Memo. It works with just a PRD and lists the rest as gaps, rated by what the receiving team needs.
+- **Cross-document checks**, the part no other skill does: a non-goal the prototype shows, a P0 no screen covers, launch thresholds that differ between the PRD and the eval plan, a must-never item with no test case, metrics or users named differently, open questions closed in one document but open in another, decisions the PRD contradicts, and stale or superseded sources. Each finding quotes both sources and is rated Blocking, Should fix, or Note.
+- Walks you through each blocking conflict one at a time, with a recommended resolution. It never edits your source documents; it lists what to change where.
+- **Create** writes one entry-point **handoff package**: verdict (Ready / Ready with caveats / Not ready), what we're building and why, source documents, decisions log, findings, gaps for the audience, open questions with owners, kickoff questions, and non-goals copied word for word. Every line links to its source.
+- **Review** checks an existing package, or a handoff doc you wrote yourself, against the same checks. It adds no product content: weak documents get pointed to the skill that fixes them.
+
+It only runs when you call it:
+
+```
+/handoff Prepare the report-scheduling handoff to engineering
+/handoff Check my PRD, eval plan and prototype agree before Thursday's kickoff
+/handoff Review docs/handoff/ai-summaries/handoff.md
+```
+
 ### Suggested flow
 
-`/grill-my-product` (is this worth building?) → `/jtbd` (what job does it do, and what's underserved?) → `/prd` (what exactly are we building?) → `/prototype` (can users actually do it?), plus `/evals` for AI features (how will we know it's good enough?). Each skill works on its own, and picks up the previous one's output if it finds it.
+`/grill-my-product` (is this worth building?) → `/jtbd` (what job does it do, and what's underserved?) → `/prd` (what exactly are we building?) → `/prototype` (can users actually do it?) → `/handoff` (do the documents agree, and is it ready for the team that builds it?). For AI ideas, start with `/need-ai-or-not` (does this need AI at all?), and add `/evals` (how will we know it's good enough?). Each skill works on its own, and picks up the previous one's output if it finds it.
 
 For AI features, `/evals` isn't a one-off step. Rerun it after launch: error analysis on production samples, and regression checks whenever the prompt or model changes.
 
@@ -118,12 +144,12 @@ Copy the skill folders you want into your global skills directory:
 
 ```bash
 git clone https://github.com/saminavaneeth/pm-skills.git
-cp -r pm-skills/grill-my-product pm-skills/need-ai-or-not pm-skills/jtbd pm-skills/prd pm-skills/evals pm-skills/prototype ~/.claude/skills/
+cp -r pm-skills/grill-my-product pm-skills/need-ai-or-not pm-skills/jtbd pm-skills/prd pm-skills/evals pm-skills/prototype pm-skills/handoff ~/.claude/skills/
 ```
 
-Saved prototype brands live in `~/.claude/prototype-brands/<brand>/`. To share one with your team, put it in a project's `.claude/prototype-brands/` folder and commit it.
-
 Or into a single project's `.claude/skills/` folder to use it only there. Start a new Claude Code session after installing.
+
+Saved prototype brands live in `~/.claude/prototype-brands/<brand>/`. To share one with your team, put it in a project's `.claude/prototype-brands/` folder and commit it.
 
 ## Credits
 
