@@ -8,7 +8,7 @@
 
 A relentless, structured interview that stress-tests a **new product** or a **new feature of an existing product** before you write a PRD or take it to review.
 
-- Asks questions in rounds, following a decision tree: problem → evidence → target user → alternatives → value → strategy fit → scope → success metrics → risks → validation → rollout.
+- Asks one question at a time, following a decision tree: problem → evidence → target user → alternatives → value → strategy fit → scope → success metrics → risks → validation → rollout.
 - Every question comes with a recommended answer, so you can move fast by saying "yes".
 - Adapts to whether it's a new product or a feature, and to how far along the idea is.
 - Looks up facts itself (your codebase, docs, data); leaves the decisions to you.
@@ -39,18 +39,96 @@ It only runs when you call it:
 
 Pairs well with `grill-my-product`: decide whether AI fits first, then stress-test the wider product decision.
 
+### `jtbd`
+
+Creates or reviews a **Jobs to Be Done** analysis for a product, feature, or market, so you decide what to build from the customer's progress rather than from a feature list.
+
+- Four modes: **Define** (build hypotheses from what you know), **Synthesize** (extract jobs from interviews, tickets, reviews), **Plan research** (tailored screener + switch / job-map interview guide), **Review** (critique an existing analysis, job stories, outcome statements, or interview guide, with a verdict and before/after rewrites).
+- Works layer by layer: job performer → core functional job (with laddering) → circumstances → job map (universal 8 steps) → desired outcome statements → emotional & social jobs → current solutions & forces of progress → job stories → implications.
+- Two formats: **Full** for strategy and roadmap decisions, and a lighter **Feature** format for a JTBD next to a PRD or prototype. The Feature format adds what the solution changes at each job step, what it does NOT do for the job, and up to three roles in one table.
+- Each outcome comes with how you'd measure it. Opportunities are scored when you have survey data, or ranked qualitatively and labeled when you don't.
+- Checks every statement against JTBD quality rules (solution-agnostic, stable, right altitude, no targets in jobs, measurable outcomes, situations not personas, conflicting incentives in the forces).
+- Labels customer evidence as observed, stated, or hypothesis, and product or platform claims as assumptions or facts that need checking, each with who confirms it. Ends with a validation plan that says what would change your mind.
+
+```
+/jtbd Synthesize the interview notes in research/ for our expense-reporting product
+/jtbd Write a feature JTBD for the incident-reporting chat bot in docs/prds/uc1.md
+/jtbd Review the job stories in docs/jtbd/expenses.md
+```
+
+### `prd`
+
+Writes a decision-ready **PRD**, or reviews one you already have.
+
+- **Review mode** gives a verdict (Ready / Ready with fixes / Not ready) against the bar for the review's purpose (early draft, eng kickoff, exec review), the 1–3 issues that matter most, and a quoted rewrite for every failure. It edits your document only if you ask.
+- **Write mode** reads what already exists first (decision brief, JTBD analysis, prototype, research, codebase, the host platform's limits), then asks only for missing decisions, one question at a time with a recommended answer. The JTBD's top outcomes become success metrics, and its "what would change our mind" becomes the rethink criteria.
+- Sizes the PRD to the work: **Lite**, **Standard**, or **Full**, plus conditional sections for AI/ML behavior, platform & integration (permissions, install prerequisites), privacy & compliance, migration, and pricing.
+- **AI and agent features** get a must-never list, a quality bar with thresholds per slice and a release gate, hard vs. judgment rules, a refusal table, an actions/tools table (risk level, who it acts as, what needs confirmation), and a data-sources table. The PRD sets the bar and links the eval plan; it doesn't copy eval method.
+- Template covers problem & evidence (labeled hypothesis vs. assumption), goals & non-goals, success metrics with baselines, targets and guardrails, roles & permissions, prioritized requirements with Given/When/Then acceptance criteria (per requirement or per flow), edge cases, risks & dependencies, staged rollout with a kill switch, and instrumentation.
+- Runs a 45-item quality checklist (blockers, majors, minors, each tagged structural or decision) plus a readiness test: could eng estimate it, QA test it, design find every state, and an exec state the bet?
+
+```
+/prd Turn the decision brief in docs/ai-summaries-brief.md into a PRD
+/prd Review docs/prds/report-scheduling.md — is it ready for eng kickoff?
+```
+
+### `evals`
+
+Creates or reviews **evals** for AI products and AI-enabled features: the PM's side of knowing whether the AI is good enough to ship, and noticing when it stops being good.
+
+- **Define** (before or early in the build): an eval plan from your PRD and JTBD analysis, with quality criteria tied to user outcomes, a "must never do" list, test-set slices with seed cases, a grader for each criterion, and launch gates.
+- **Analyze** (real outputs exist): error analysis on traces. It reads the outputs, notes the first thing that went wrong, groups failures into a taxonomy, and ranks them by frequency × severity. Then it writes code checks and LLM-judge prompts and validates the judges against expert labels.
+- **Review**: critiques an eval plan, rubric, judge prompt, test set, or results. Results reviews end with a **Go / Go with conditions / No-go** call.
+- Opinionated defaults: binary pass/fail over 1–5 scores, zero-tolerance criteria over averages, results by slice rather than only overall, no trusting an unvalidated judge, and judges from a different model family than the AI they grade.
+- Works with any eval tool. Outputs are a Markdown plan, JSONL or CSV test cases, and judge prompts engineers can use in whatever they run.
+
+```
+/evals Define an eval plan for the AI summaries in docs/prds/ai-summaries.md
+/evals Run error analysis on the 120 traces in exports/summaries-beta.jsonl
+/evals Review the results in docs/evals/ai-summaries/results-v3.md — can we go to GA?
+```
+
+### `prototype`
+
+Builds or reviews a **clickable HTML prototype** for usability tests, stakeholder demos, or exploring design options, without starting from scratch each time.
+
+- **Reusable kit:** components (app shell, tables, forms, dialogs, tabs, toasts, empty states, AI output blocks) and mechanics configured with `data-` attributes. These cover screens and navigation, state that carries through a flow, realistic fake data, simulated latency, variants, requirement notes, a built-in link and label check, and a mobile frame. Plain HTML/CSS/JS that opens with a double-click.
+- **Swappable look, so reuse is optional.** Everything is styled through one `tokens.css` file:
+  - **Company brand:** imports your design system from **Figma variables** (Figma MCP or a JSON export) or **CSS variables**, previews the mapping with a contrast check, and saves it as a named brand that later prototypes reuse.
+  - **New look:** 2–3 directions from a short brief, which you can switch between inside the prototype.
+  - **Default** neutral, or **wireframe** for early concept tests.
+- Built from the PRD's P0 flows and the JTBD job stories. It covers the empty, error, and loading states and tags screens with requirement IDs.
+- For user tests: `?present` mode, a test script built from the job stories, and a reset between participants. **Review mode** checks an existing prototype against its PRD and purpose.
+
+```
+/prototype Make the P0 flows in docs/prds/report-scheduling.md clickable for a user test, using our Acme brand
+/prototype Import our design tokens from the Figma variables export in design/tokens.json
+/prototype Explore three visual directions for the new onboarding concept
+```
+
+### Suggested flow
+
+`/grill-my-product` (is this worth building?) → `/jtbd` (what job does it do, and what's underserved?) → `/prd` (what exactly are we building?) → `/prototype` (can users actually do it?), plus `/evals` for AI features (how will we know it's good enough?). Each skill works on its own, and picks up the previous one's output if it finds it.
+
+For AI features, `/evals` isn't a one-off step. Rerun it after launch: error analysis on production samples, and regression checks whenever the prompt or model changes.
+
 ## Install
 
-Copy a skill folder into your global skills directory:
+Copy the skill folders you want into your global skills directory:
 
 ```bash
 git clone https://github.com/saminavaneeth/pm-skills.git
-cp -r pm-skills/grill-my-product ~/.claude/skills/
-cp -r pm-skills/need-ai-or-not ~/.claude/skills/
+cp -r pm-skills/grill-my-product pm-skills/need-ai-or-not pm-skills/jtbd pm-skills/prd pm-skills/evals pm-skills/prototype ~/.claude/skills/
 ```
+
+Saved prototype brands live in `~/.claude/prototype-brands/<brand>/`. To share one with your team, put it in a project's `.claude/prototype-brands/` folder and commit it.
 
 Or into a single project's `.claude/skills/` folder to use it only there. Start a new Claude Code session after installing.
 
 ## Credits
 
 `grill-my-product` is inspired by Matt Pocock's [grill-me / grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity) skills.
+
+`jtbd` draws on Tony Ulwick's Outcome-Driven Innovation (job map, desired outcome statements, opportunity score), Clayton Christensen's jobs theory, and Bob Moesta and Chris Spiek's switch interview and forces of progress.
+
+`evals` follows the error-analysis-first approach to LLM evals taught by Hamel Husain and Shreya Shankar: look at the data, build a failure taxonomy, prefer binary judges, and validate them against human labels.
